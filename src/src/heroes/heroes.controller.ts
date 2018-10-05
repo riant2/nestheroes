@@ -9,9 +9,9 @@ import {
 	Put,
 } from '@nestjs/common';
 import { Types } from 'mongoose';
-import { HeroModel } from './heroes.model';
+import { HeroModel, Hero } from './heroes.model';
 import { HeroesDto } from './heroes.dto';
-import { Document } from 'mongoose';
+import { MySchemaInterface } from '../decorators';
 
 @Controller('heroes')
 export class HeroesController {
@@ -20,12 +20,16 @@ export class HeroesController {
 		@Query('page') page: number = 1,
 		@Query('size') size: number = 100,
 	): Promise<any> {
+		const hero = new Hero() as Hero & MySchemaInterface;
+		// tslint:disable-next-line:no-console
+		console.log({ privvy: hero.privvy });
 		return await HeroModel.find();
 	}
 
 	@Get(':id')
 	async findOne(@Param('id') id: number): Promise<any> {
-		return await HeroModel.findById(id);
+		const result = await HeroModel.findById(id);
+		return result;
 	}
 
 	@Post()
@@ -34,12 +38,6 @@ export class HeroesController {
 		// console.log(`Creating new hero: ${JSON.stringify(hero, null, 4)}`);
 		const newHero = await HeroModel.create(dto);
 		return newHero;
-	}
-
-	@Delete(':id')
-	async delete(@Param('id') id: number) {
-		const result = await HeroModel.findByIdAndRemove(id);
-		return result;
 	}
 
 	@Put(':id')
@@ -52,5 +50,11 @@ export class HeroesController {
 		);
 		// console.log(`Updated hero: ${JSON.stringify(updatedHero)}`);
 		return updatedHero;
+	}
+
+	@Delete(':id')
+	async delete(@Param('id') id: number) {
+		const result = await HeroModel.findByIdAndRemove(id);
+		return result;
 	}
 }

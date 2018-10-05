@@ -1,6 +1,36 @@
-import { Document, model, Model, Schema } from 'mongoose';
+import { MySchema } from '../decorators';
+import { Schema, Model, Document, model } from 'mongoose';
+
+// import { Document, model, Model, Schema } from 'mongoose';
+
+@MySchema
+export class Hero {
+	_id: string;
+	name: string;
+	skills: any[];
+	faction: string;
+	class: string;
+	stats: {
+		armor: number;
+		armorBreak: number;
+		attack: number;
+		block: number;
+		controlImmune: number;
+		crit: number;
+		critDamage: number;
+		health: number;
+		holyDamage: number;
+		level: number;
+		power: number;
+		precision: number;
+		reduceDamage: number;
+		skillDamage: number;
+		speed: number;
+	};
+}
 
 const schema: Schema = new Schema({
+	_id: String,
 	class: String,
 	faction: String,
 	name: String,

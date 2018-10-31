@@ -1,28 +1,20 @@
 import { Types } from 'mongoose';
+import { ValidateNested } from 'class-validator';
+import { Statistics } from './statistics';
+import { ApiModelProperty } from '@nestjs/swagger';
 
 export class HeroesDto {
+	@ApiModelProperty()
 	_id: Types.ObjectId;
+	@ApiModelProperty()
 	class: string;
+	@ApiModelProperty()
 	faction: string;
+	@ApiModelProperty()
 	name: string;
+	@ApiModelProperty()
 	skills: any[];
+	@ApiModelProperty()
+	@ValidateNested()
 	stats: Statistics;
-}
-
-export class Statistics {
-	armor: number;
-	armorBreak: number;
-	attack: number;
-	block: number;
-	controlImmune: number;
-	crit: number;
-	critDamage: number;
-	health: number;
-	holyDamage: number;
-	level: number;
-	power: number;
-	precision: number;
-	reduceDamage: number;
-	skillDamage: number;
-	speed: number;
 }

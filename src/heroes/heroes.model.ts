@@ -1,9 +1,5 @@
-import { MySchema } from '../decorators';
 import { Schema, Model, Document, model } from 'mongoose';
 
-// import { Document, model, Model, Schema } from 'mongoose';
-
-@MySchema
 export class Hero {
 	_id: string;
 	name: string;

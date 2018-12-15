@@ -11,7 +11,6 @@ import {
 import { Types } from 'mongoose';
 import { HeroModel, Hero } from './heroes.model';
 import { HeroesDto } from './heroes.dto';
-import { MySchemaInterface } from '../decorators';
 
 @Controller('heroes')
 export class HeroesController {
@@ -20,10 +19,10 @@ export class HeroesController {
 		@Query('page') page: number = 1,
 		@Query('size') size: number = 100,
 	): Promise<any> {
-		const hero = new Hero() as Hero & MySchemaInterface;
 		// tslint:disable-next-line:no-console
-		console.log({ privvy: hero.privvy });
-		return await HeroModel.find();
+		return await HeroModel.find()
+			.limit(size)
+			.skip((page - 1) * size);
 	}
 
 	@Get(':id')

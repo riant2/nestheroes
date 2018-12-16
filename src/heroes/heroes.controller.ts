@@ -7,6 +7,7 @@ import {
 	Body,
 	Delete,
 	Put,
+	InternalServerErrorException,
 } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { HeroModel, Hero } from './heroes.model';
@@ -14,6 +15,11 @@ import { HeroesDto } from './heroes.dto';
 
 @Controller('heroes')
 export class HeroesController {
+	@Get('/error')
+	async error() {
+		throw new InternalServerErrorException('asdf', 'fdsa');
+	}
+
 	@Get()
 	async findMany(
 		@Query('page') page: number = 1,

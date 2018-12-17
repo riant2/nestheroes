@@ -25,9 +25,8 @@ export class HeroesController {
 		@Query('page') page: number = 1,
 		@Query('size') size: number = 100,
 	): Promise<any> {
-		// tslint:disable-next-line:no-console
 		return await HeroModel.find()
-			.limit(size)
+			.limit(+size)
 			.skip((page - 1) * size);
 	}
 
@@ -40,20 +39,17 @@ export class HeroesController {
 	@Post()
 	async create(@Body() dto: HeroesDto): Promise<any> {
 		dto._id = Types.ObjectId();
-		// console.log(`Creating new hero: ${JSON.stringify(hero, null, 4)}`);
 		const newHero = await HeroModel.create(dto);
 		return newHero;
 	}
 
 	@Put(':id')
 	async update(@Param('id') id: Types.ObjectId, @Body() dto: HeroesDto) {
-		// console.log(`Updating hero: ${JSON.stringify(hero, null, 4)}`);
 		const updatedHero = await HeroModel.findByIdAndUpdate(
 			id,
 			{ $set: dto },
 			{ new: true },
 		);
-		// console.log(`Updated hero: ${JSON.stringify(updatedHero)}`);
 		return updatedHero;
 	}
 

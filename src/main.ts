@@ -5,11 +5,15 @@ import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule);
+	const app = await NestFactory.create(AppModule, {
+		cors: {
+			origin: 'http://localhost:4200',
+		},
+	});
 	app.useGlobalPipes(new ValidationPipe());
 
 	const mongoConnection = await connect(
-		'mongodb://localhost/local',
+		'mongodb://localhost/heroes',
 		{ useNewUrlParser: true },
 	);
 

@@ -7,10 +7,18 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Launch backend (all)",
-			"program": "${workspaceFolder}/dist/main.js",
-			"outFiles": ["${workspaceFolder}/**/*.js"],
-			"env": {}
+			"name": "Launch typescript",
+			"preLaunchTask": "tsc: build - tsconfig.json",
+			"program": "${workspaceFolder}/src/main.ts",
+			"protocol": "inspector",
+			"cwd": "${workspaceFolder}",
+			"outFiles": ["${workspaceFolder}/dist/**/*.js"],
+			"env": {
+				"NODE_ENV": "development",
+				"IMCC_API_CONFIG_FILE": "local",
+				"IMCC_API_ROLES": "api,worker,dispatcher"
+			},
+			"outputCapture": "std"
 		}
 	]
 }
